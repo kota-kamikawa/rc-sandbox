@@ -23,7 +23,7 @@ jobs:
           key: node_modules-${{ hashFiles('package-lock.json') }}
       - name: Install node_modules
         # npm ci --silent is used to install the dependencies without printing the progress bar
-        run: npm ci --silent
+        run: npm ci
 
   run-ts-compiler:
     name: Check TypeScript compilation is successful
