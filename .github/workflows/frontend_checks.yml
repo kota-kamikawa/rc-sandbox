@@ -5,7 +5,12 @@ on:
     branches: [develop, main, release]
   pull_request:
     branches: [develop, main, release]
+    paths:
+      - "frontend/**" # Backendは別のワークフローでチェックする
+      - ".github/**"
     types: [opened, reopened, synchronize, ready_for_review]
+    paths-ignore: ["README.md"]
+
 defaults:
   run:
     working-directory: frontend
