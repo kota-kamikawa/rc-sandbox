@@ -3,6 +3,8 @@ import eslint from '@eslint/js';
 import simple_import_sort from 'eslint-plugin-simple-import-sort';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
+import jest_dom from 'eslint-plugin-jest-dom';
+import testing_library from 'eslint-plugin-testing-library';
 
 export default [
   eslint.configs.recommended,
@@ -19,6 +21,8 @@ export default [
     },
     plugins: {
       'simple-import-sort': simple_import_sort,
+      'jest-dom': jest_dom,
+      'testing-library': testing_library,
     },
     rules: {
       //"simple-import-sort/imports": "error", // import文のソートを強制する
@@ -30,6 +34,6 @@ export default [
     },
   },
   {
-    ignores: ['eslint.config.js'],
+    ignores: ['eslint.config.js' , 'vitest.setup.ts'],
   },
 ];

@@ -6,10 +6,13 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
-    "lint-fix": "eslint . --fix --report-unused-disable-directives --max-warnings 0",
+    "lint:tsc": "tsc --noEmit",
+    "lint:eslint": "eslint . --report-unused-disable-directives --max-warnings 0",
+    "lint:prettier": "prettier . --check --ignore-path .gitignore --ignore-path .prettierignore",
+    "lint:eslint:fix": "eslint . --fix --report-unused-disable-directives --max-warnings 0",
+    "test:unit": "vitest run",
+    "test:unit:coverage": "vitest run --coverage",
     "preview": "vite preview",
-    "fmt-check": "prettier --check src/**/*.{ts,tsx}",
     "fmt": "prettier --write src/**/*.{ts,tsx}"
   },
   "dependencies": {
@@ -18,6 +21,9 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.6.0",
+    "@jest/types": "^29.6.3",
+    "@testing-library/jest-dom": "^6.4.6",
+    "@testing-library/react": "^16.0.0",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
@@ -25,14 +31,18 @@
     "@typescript-eslint/parser": "^7.13.1",
     "@vitejs/plugin-react": "^4.3.1",
     "eslint": "^8.57.0",
+    "eslint-plugin-jest-dom": "^5.4.0",
     "eslint-plugin-react": "^7.34.3",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
     "eslint-plugin-simple-import-sort": "^12.1.0",
+    "eslint-plugin-testing-library": "^6.2.2",
     "globals": "^15.6.0",
+    "jsdom": "^24.1.0",
     "prettier": "^3.3.2",
     "typescript": "^5.2.2",
     "typescript-eslint": "^7.14.1",
-    "vite": "^5.3.1"
+    "vite": "^5.3.1",
+    "vitest": "^1.6.0"
   }
 }
