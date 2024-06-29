@@ -9,7 +9,6 @@ on:
       - "frontend/**" # Backendは別のワークフローでチェックする
       - ".github/**"
     types: [opened, reopened, synchronize, ready_for_review]
-    paths-ignore: ["README.md"]
 
 defaults:
   run:
