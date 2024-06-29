@@ -80,7 +80,7 @@ jobs:
       - name: Install node_modules
         run: npm ci --silent
       - name: Run Prettier
-        run: yarn lint:prettier
+        run: npm run lint:prettier
 
   vitest:
     name: Vitest

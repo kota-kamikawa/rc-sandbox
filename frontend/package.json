@@ -9,6 +9,7 @@
     "lint:tsc": "tsc --noEmit",
     "lint:eslint": "eslint . --report-unused-disable-directives --max-warnings 0",
     "lint:prettier": "prettier . --check --ignore-path .gitignore --ignore-path .prettierignore",
+    "lint:prettier:fix": "prettier . --write --ignore-path .gitignore --ignore-path .prettierignore",
     "lint:eslint:fix": "eslint . --fix --report-unused-disable-directives --max-warnings 0",
     "test:unit": "vitest run",
     "test:unit:coverage": "vitest run --coverage",
@@ -21,7 +22,6 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.6.0",
-    "@jest/types": "^29.6.3",
     "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/react": "^16.0.0",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",

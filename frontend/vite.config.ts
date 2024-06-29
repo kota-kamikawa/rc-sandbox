@@ -1,5 +1,4 @@
 /// <reference types="vitest" />
-import '@testing-library/jest-dom/extend-expect';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 

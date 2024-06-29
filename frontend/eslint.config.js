@@ -1,10 +1,10 @@
 // eslint.config.js
 import eslint from '@eslint/js';
+import jest_dom from 'eslint-plugin-jest-dom';
 import simple_import_sort from 'eslint-plugin-simple-import-sort';
+import testing_library from 'eslint-plugin-testing-library';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
-import jest_dom from 'eslint-plugin-jest-dom';
-import testing_library from 'eslint-plugin-testing-library';
 
 export default [
   eslint.configs.recommended,
@@ -34,6 +34,6 @@ export default [
     },
   },
   {
-    ignores: ['eslint.config.js' , 'vitest.setup.ts'],
+    ignores: ['eslint.config.js', 'vitest.setup.ts'],
   },
 ];
