@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [develop, main, release]
     types: [opened, reopened, synchronize, ready_for_review]
+defaults:
+  run:
+    working-directory: frontend
 
 jobs:
   cache-node-modules:
