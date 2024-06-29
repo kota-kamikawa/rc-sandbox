@@ -1,0 +1,35 @@
+// eslint.config.js
+import eslint from '@eslint/js';
+import simple_import_sort from 'eslint-plugin-simple-import-sort';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
+
+export default [
+  eslint.configs.recommended,
+  ...tseslint.configs.recommended,
+  {
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      globals: {
+        ...globals.browser,
+        ...globals.es2021,
+        ...globals.node,
+      },
+    },
+    plugins: {
+      'simple-import-sort': simple_import_sort,
+    },
+    rules: {
+      //"simple-import-sort/imports": "error", // import文のソートを強制する
+      //"simple-import-sort/exports": "error", // export文のソートを強制する
+      'no-unused-vars': 'off', // 未使用の変数を許可しない
+      'no-console': 'warn', // Console.logをWarningとして扱う
+      camelcase: 'warn', // キャメルケースを強制する
+      'no-var': 'error',
+    },
+  },
+  {
+    ignores: ['eslint.config.js'],
+  },
+];
