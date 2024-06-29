@@ -1,0 +1,109 @@
+name: Checks
+
+on:
+  push:
+    branches: [develop, main, release]
+  pull_request:
+    branches: [develop, main, release]
+    paths:
+      - "frontend/**" # Backendは別のワークフローでチェックする
+      - ".github/**"
+    types: [opened, reopened, synchronize, ready_for_review]
+
+defaults:
+  run:
+    working-directory: frontend
+
+jobs:
+  cache-node-modules:
+    name: Cache node_modules
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - uses: actions/cache@v4
+        with:
+          path: "node_modules"
+          key: node_modules-${{ hashFiles('package-lock.json') }}
+      - name: Install node_modules
+        # npm ci --silent is used to install the dependencies without printing the progress bar
+        run: npm ci
+
+  run-ts-compiler:
+    name: Check TypeScript compilation is successful
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: cache-node-modules
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - uses: actions/cache@v4
+        with:
+          path: "node_modules"
+          key: node_modules-${{ hashFiles('package-lock.json') }}
+      - name: Install node_modules
+        run: npm ci --silent
+      - name: Run ts compiler
+        run: npm run lint:tsc
+
+  eslint:
+    name: ESLint
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: cache-node-modules
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - uses: actions/cache@v4
+        with:
+          path: "node_modules"
+          key: node_modules-${{ hashFiles('package-lock.json') }}
+      - name: Install node_modules
+        run: npm ci --silent
+      - name: Run ESLint
+        run: npm run lint:eslint
+
+  prettier:
+    name: Prettier
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: cache-node-modules
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - uses: actions/cache@v4
+        with:
+          path: "node_modules"
+          key: node_modules-${{ hashFiles('package-lock.json') }}
+      - name: Install node_modules
+        run: npm ci --silent
+      - name: Run Prettier
+        run: npm run lint:prettier
+
+  vitest:
+    name: Vitest
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: run-ts-compiler
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - uses: actions/cache@v4
+        with:
+          path: "node_modsules"
+          key: node_modules-${{ hashFiles('package-lock.json') }}
+      - name: Install node_modules
+        run: npm ci --silent
+      - name: Run vitest
+        run: npm run test:unit
