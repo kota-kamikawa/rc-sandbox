@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { useNavigate } from '@tanstack/react-router';
+import { useSnackbar } from 'notistack';
 import { useSetRecoilState } from 'recoil';
 
 import { authState, userState } from '../store/auth';
@@ -13,6 +15,8 @@ const useLoginForm = () => {
   const [form, setForm] = useState<LoginFormState>({ email: '', password: '' });
   const setUser = useSetRecoilState(userState);
   const setAuth = useSetRecoilState(authState);
+  const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
 
   const inputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -37,7 +41,7 @@ const useLoginForm = () => {
     };
 
     if (!result) {
-      alert('ログイン失敗');
+      enqueueSnackbar('ログインに失敗しました', { variant: 'error' });
       return;
     }
 
@@ -48,7 +52,11 @@ const useLoginForm = () => {
     };
     setUser(user);
     setAuth(result);
-    alert('ログイン成功');
+
+    navigate({
+      to: '/home',
+    });
+    enqueueSnackbar('ログインしました', { variant: 'success' });
   };
 
   const logout = () => {

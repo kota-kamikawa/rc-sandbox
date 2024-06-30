@@ -22,6 +22,8 @@
     "@mui/icons-material": "^5.15.21",
     "@mui/material": "^5.15.21",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
+    "@tanstack/react-router": "^1.43.2",
+    "notistack": "^3.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "recoil": "^0.7.7",
@@ -29,6 +31,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.6.0",
+    "@tanstack/router-devtools": "^1.43.2",
+    "@tanstack/router-plugin": "^1.43.1",
     "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/react": "^16.0.0",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",

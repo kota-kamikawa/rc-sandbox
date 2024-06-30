@@ -1,13 +1,15 @@
-import { RecoilRoot } from 'recoil';
+import { RecoilRoot, useRecoilValue } from 'recoil';
 
-import { Login } from './pages/Login';
+import { authState } from '../store/auth';
+import { Home } from './pages/Home';
+import { Welcome } from './pages/Welcome';
 
 function App() {
+  const auth = useRecoilValue(authState);
+
   return (
     <>
-      <RecoilRoot>
-        <Login />
-      </RecoilRoot>
+      <RecoilRoot>{auth.token !== null ? <Home /> : <Welcome />}</RecoilRoot>
     </>
   );
 }
