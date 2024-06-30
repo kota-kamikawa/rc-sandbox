@@ -6,14 +6,14 @@
  * @see https://recoiljs.org/docs/api-reference/core/atom
  * @see https://recoiljs.org/docs/api-reference/core/selector
  */
-import { atom } from 'recoil';
+import { atom, selector } from 'recoil';
 
-interface User {
+export interface User {
   id: number;
   username: string; // email
 }
 
-interface AuthState {
+export interface AuthState {
   token: string | null;
   user: User | null;
 }
@@ -29,4 +29,12 @@ export const authState = atom<AuthState>({
 export const userState = atom<User | null>({
   key: 'userState',
   default: null,
+});
+
+export const authTokenState = selector({
+  key: 'authTokenState',
+  get: ({ get }) => {
+    const { token } = get(authState);
+    return token !== null;
+  },
 });
