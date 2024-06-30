@@ -6,25 +6,21 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
+import { useRecoilValue } from 'recoil';
 
+import useLoginForm from '../../hooks/useLoginForm';
+import { authState } from '../../store/auth';
 import { Copyright } from '../atoms/Copyright';
 import { InputText } from '../atoms/InputText';
 import { PrimaryButton } from '../atoms/PrimaryButton';
 
-interface LoginFormValues {
-  email: string;
-  password: string;
-}
-
-interface Props {
-  formValues: unknown;
-  inputChangeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-}
-
 export const LoginForm = () => {
+  const auth = useRecoilValue(authState);
+  const { form, inputChange, login } = useLoginForm();
+
   return (
     <Grid item>
+      <h2>{JSON.stringify(auth)}</h2>
       <Box
         sx={{
           my: 8,
@@ -40,7 +36,7 @@ export const LoginForm = () => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+        <Box component="form" noValidate onSubmit={login} sx={{ mt: 1 }}>
           <InputText
             margin="normal"
             required
@@ -50,8 +46,8 @@ export const LoginForm = () => {
             name="email"
             autoComplete="email"
             autoFocus
-            value={formValues.email}
-            onChange={inputChangeHandler}
+            value={form.email}
+            onChange={inputChange}
           ></InputText>
           <InputText
             margin="normal"
@@ -62,8 +58,8 @@ export const LoginForm = () => {
             type="password"
             id="password"
             autoComplete="current-password"
-            value={formValues.password}
-            onChange={inputChangeHandler}
+            value={form.password}
+            onChange={inputChange}
           ></InputText>
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
