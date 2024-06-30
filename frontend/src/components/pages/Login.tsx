@@ -15,8 +15,13 @@ import { Copyright } from '../atoms/Copyright';
 import { InputText } from '../atoms/InputText';
 import { PrimaryButton } from '../atoms/PrimaryButton';
 
+interface FormValues {
+  email: string;
+  password: string;
+}
+
 export const Login = (): JSX.Element => {
-  const [formValues, setFormValues] = useState({
+  const [formValues, setFormValues] = useState<FormValues>({
     email: '',
     password: '',
   });

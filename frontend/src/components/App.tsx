@@ -1,9 +1,13 @@
+import { RecoilRoot } from 'recoil';
+
 import { Login } from './pages/Login';
 
 function App() {
   return (
     <>
-      <Login />
+      <RecoilRoot>
+        <Login />
+      </RecoilRoot>
     </>
   );
 }
