@@ -14,6 +14,7 @@ import { styled } from '@mui/material/styles';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useRecoilValue } from 'recoil';
 
+import { Header } from '../components/organisms/Header';
 import { authState } from '../store/auth';
 
 export const Route = createFileRoute('/home')({
@@ -63,41 +64,48 @@ function Home() {
   };
 
   return (
-    <MainContainer>
-      <Title>Todo List</Title>
-      <TodoContainer>
-        {todos.map((todo) => (
-          <TodoItem key={todo.id}>
-            <Checkbox
-              checked={todo.completed}
-              onChange={() => toggleTodo(todo.id)}
+    <>
+      <Header />
+      <MainContainer>
+        <Title>Todo List</Title>
+        <TodoContainer>
+          {todos.map((todo) => (
+            <TodoItem key={todo.id}>
+              <Checkbox
+                checked={todo.completed}
+                onChange={() => toggleTodo(todo.id)}
+              />
+              <TodoText
+                style={{
+                  textDecoration: todo.completed ? 'line-through' : 'none',
+                }}
+              >
+                {todo.text}
+              </TodoText>
+              <IconButton onClick={() => deleteTodo(todo.id)} color="secondary">
+                <DeleteIcon />
+              </IconButton>
+            </TodoItem>
+          ))}
+          <AddTodoForm>
+            <TextField
+              variant="outlined"
+              fullWidth
+              value={newTodo}
+              onChange={(e) => setNewTodo(e.target.value)}
+              placeholder="Add a new task"
             />
-            <TodoText
-              style={{
-                textDecoration: todo.completed ? 'line-through' : 'none',
-              }}
+            <AddTodoButton
+              variant="contained"
+              color="primary"
+              onClick={addTodo}
             >
-              {todo.text}
-            </TodoText>
-            <IconButton onClick={() => deleteTodo(todo.id)} color="secondary">
-              <DeleteIcon />
-            </IconButton>
-          </TodoItem>
-        ))}
-        <AddTodoForm>
-          <TextField
-            variant="outlined"
-            fullWidth
-            value={newTodo}
-            onChange={(e) => setNewTodo(e.target.value)}
-            placeholder="Add a new task"
-          />
-          <AddTodoButton variant="contained" color="primary" onClick={addTodo}>
-            Add
-          </AddTodoButton>
-        </AddTodoForm>
-      </TodoContainer>
-    </MainContainer>
+              Add
+            </AddTodoButton>
+          </AddTodoForm>
+        </TodoContainer>
+      </MainContainer>
+    </>
   );
 }
 
