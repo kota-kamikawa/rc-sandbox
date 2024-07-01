@@ -12,14 +12,20 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from '@tanstack/react-router';
 import { useSnackbar } from 'notistack';
+import { useRecoilState } from 'recoil';
 
+import AVATAR_IMG from '../../assets/avater.png';
 import APP_LOGO from '../../assets/logo.svg';
 import useLoginForm from '../../hooks/useLoginForm';
+import { userState } from '../../store/auth';
+import { ProfileModal } from './ProfileModal';
 
 const settings = ['Profile', 'Dashboard', 'Logout'];
 
 export const Header = () => {
+  const [user] = useRecoilState(userState);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const [open, setOpen] = useState(false);
   const snackvar = useSnackbar();
   const navigate = useNavigate();
   const { logout } = useLoginForm();
@@ -45,6 +51,9 @@ export const Header = () => {
         variant: 'success',
       });
       return;
+    } else if (event.currentTarget.id === 'Profile') {
+      handleOpenProfile();
+      return;
     }
 
     snackvar.enqueueSnackbar(`Move to : ${event.currentTarget.id} page!`, {
@@ -56,70 +65,81 @@ export const Header = () => {
     });
   };
 
+  const handleOpenProfile = () => {
+    setOpen(true);
+  };
+
+  const handleCloseProfile = () => {
+    setOpen(false);
+  };
+
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <img
-            src={APP_LOGO}
-            alt="logo"
-            style={{ width: '30px', display: 'flex', marginRight: '1rem' }}
-          />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            RC-Sandbox
-          </Typography>
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+    <>
+      <AppBar position="static">
+        <Container maxWidth="xl">
+          <Toolbar disableGutters>
+            <img
+              src={APP_LOGO}
+              alt="logo"
+              style={{ width: '30px', display: 'flex', marginRight: '1rem' }}
+            />
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              href="#app-bar-with-responsive-menu"
+              sx={{
+                mr: 2,
+                display: { xs: 'flex', md: 'none' },
+                flexGrow: 1,
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: 'inherit',
+                textDecoration: 'none',
               }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography
-                    textAlign="center"
-                    id={setting}
-                    onClick={handleMenuClick}
-                  >
-                    {setting}
-                  </Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+              RC-Sandbox
+            </Typography>
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt={user?.username} src={AVATAR_IMG} />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <Typography
+                      textAlign="center"
+                      id={setting}
+                      onClick={handleMenuClick}
+                    >
+                      {setting}
+                    </Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+      <ProfileModal open={open} handleClose={handleCloseProfile} />
+    </>
   );
 };
