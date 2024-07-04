@@ -20,13 +20,15 @@ resource "aws_s3_bucket_policy" "react_app_policy" {
   bucket = aws_s3_bucket.react_app.id
 
   policy = jsonencode({
-    Version = "2012-10-17"
+    Version = "2012-10-17",
     Statement = [
       {
-        Effect    = "Allow"
-        Principal = "*"
-        Action    = "s3:GetObject"
-        Resource  = "${aws_s3_bucket.react_app.arn}/*"
+        Effect = "Allow",
+        Principal = {
+          "AWS" : "${aws_cloudfront_origin_access_identity.react_app.iam_arn}"
+        },
+        Action   = "s3:GetObject",
+        Resource = "${aws_s3_bucket.react_app.arn}/*"
       }
     ]
   })
@@ -79,3 +81,4 @@ resource "aws_cloudfront_distribution" "react_app" {
 resource "aws_cloudfront_origin_access_identity" "react_app" {
   comment = "OAI for ${aws_s3_bucket.react_app.id}"
 }
+
