@@ -17,3 +17,7 @@
 "terraform":
 - changed-files:
   - any-glob-to-any-file: "terraform/**"
+
+"actions":
+- changed-files:
+  - any-glob-to-any-file: ".github/**"
