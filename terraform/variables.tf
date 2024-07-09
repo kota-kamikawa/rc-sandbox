@@ -1,6 +1,6 @@
 variable "region" {
   description = "The AWS region to create resources in."
-  default     = "us-west-2"
+  default     = "ap-northeast-1"
 }
 
 variable "bucket_name" {
@@ -24,4 +24,14 @@ variable "secret_key" {
   description = "AWS secret key"
   type        = string
   sensitive   = true
+}
+
+variable "tfstate_bucket_name" {
+  description = "The name of the S3 bucket for tfstate."
+  type        = string
+}
+
+variable "dynamodb_table_name" {
+  description = "The name of the DynamoDB table for state locking."
+  type        = string
 }
