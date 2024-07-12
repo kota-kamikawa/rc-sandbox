@@ -12,3 +12,13 @@ variable "cloudfront_comment" {
   description = "Comment for the CloudFront distribution."
   type        = string
 }
+
+variable "github_owner" {
+  description = "github_owner"
+  type        = string
+}
+
+variable "github_repo" {
+  description = "github_repo"
+  type        = string
+}

@@ -14,17 +14,6 @@ variable "cloudfront_comment" {
   default     = "CloudFront distribution for React app"
 }
 
-variable "access_key" {
-  description = "AWS access key"
-  type        = string
-  sensitive   = true
-}
-
-variable "secret_key" {
-  description = "AWS secret key"
-  type        = string
-  sensitive   = true
-}
 
 variable "tfstate_bucket_name" {
   description = "The name of the S3 bucket for tfstate."
@@ -33,5 +22,15 @@ variable "tfstate_bucket_name" {
 
 variable "dynamodb_table_name" {
   description = "The name of the DynamoDB table for state locking."
+  type        = string
+}
+
+variable "github_owner" {
+  description = "github_owner"
+  type        = string
+}
+
+variable "github_repo" {
+  description = "github_repo"
   type        = string
 }
