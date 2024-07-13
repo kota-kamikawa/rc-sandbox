@@ -43,6 +43,7 @@ jobs:
       - name: Verify Checkouts
         run: ls -la
 
+      # https://zenn.dev/nixieminton/articles/8b26a92feb26d8
       - name: Set up Node
         uses: actions/setup-node@v4
         with:

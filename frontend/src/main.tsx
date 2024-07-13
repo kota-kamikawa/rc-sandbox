@@ -24,6 +24,8 @@ const InnerApp = () => {
   return <RouterProvider router={router} context={{ auth }} />;
 };
 
+console.log('Starting app...');
+
 // import { theme } from './theme';
 
 const defaultTheme = createTheme();
