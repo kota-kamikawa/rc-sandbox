@@ -1,0 +1,49 @@
+name: "Deploy"
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - "frontend/src/**"
+
+env:
+  AWS_REGION: ap-northeast-1
+  S3_BUCKET: rc-sandbox-2024-07-03
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+
+      - name: set aws role to assume
+        run: echo "AWS_ROLE_ARN=${{ secrets.AWS_ROLE_TO_ASSUME }}" >> $GITHUB_ENV
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy
+        # S3://バケット名/ディレクトリ名/ファイル名 / ソース：s3://vngb-front-dev
+        run: aws s3 cp --recursive --region ${{ env.AWS_REGION }} dist/ s3://${{ env.S3_BUCKET }}/
