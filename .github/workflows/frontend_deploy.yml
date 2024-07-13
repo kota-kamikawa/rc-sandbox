@@ -37,6 +37,12 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
           role-to-assume: ${{ env.AWS_ROLE_ARN }}
 
+      - name: Verify Path
+        run: pwd
+
+      - name: Verify Checkouts
+        run: ls -la
+
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
