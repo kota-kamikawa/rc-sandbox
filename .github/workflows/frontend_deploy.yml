@@ -5,10 +5,12 @@ on:
     branches:
       - main
       - develop
+    paths:
+      - "frontend/src/**"
 
 env:
   AWS_REGION: ap-northeast-1
-  S3_BUCKET: { S3_BUCKET_NAME }
+  S3_BUCKET: rc-sandbox-2024-07-03
 
 permissions:
   id-token: write
