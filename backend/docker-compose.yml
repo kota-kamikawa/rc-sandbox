@@ -1,7 +1,0 @@
-services:
-  fastapi:
-    build: .
-    ports:
-      - "80:80"
-    volumes:
-      - ./app:/app
