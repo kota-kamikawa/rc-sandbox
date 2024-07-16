@@ -6,3 +6,5 @@ services:
     ports:
       - "80:80"
     container_name: my_python_app_container
+    volumes:
+      - ./app:/code/app
